@@ -11,7 +11,7 @@ html {
 }
 
 /*
- * Global layout stuff 
+ * Global layout stuff
  */
 
 body {
@@ -25,6 +25,8 @@ body {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 
+
  .container {
-  margin-top: 100px;
+  margin: 140px auto 0 auto;
+  width: 450px;
  }
