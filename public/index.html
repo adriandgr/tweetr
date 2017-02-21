@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <!-- App CSS >> nav -->
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+    <!-- App CSS >> new tweets form -->
+    <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
     <!-- App JS -->
@@ -29,7 +31,16 @@
     <!-- Page-specific (main) content here -->
     <main class="container">
 
-    <p>Goodbye...my Sarah Jane! There was a war. A Time War. The Last Great Time War. My people fought a race called the Daleks, for the sake of all creation. And they lost. We lost. Everyone lost. They're all gone now. My family. My friends. Even that sky. Please, when Torchwood comes to write my complete history, don't tell people I travelled through time and space with her mother! It is! It's the city of New New York! Strictly speaking, it's the fifteenth New York since the original, so that makes it New-New-New-New-New-New-New-New-New-New-New-New-New-New-New New York.
+    <section class="new-tweet">
+      <h2>Compose Tweet</h2>
+      <form action="/tweets/" method="POST">
+        <textarea name="text" placeholder="What are you humming about?"></textarea>
+        <input type="submit" value="Tweet">
+        <span class="counter">140</span>
+      </form>
+    </section>
+
+    <p>Goodbye...my Sarah Jane! There was a war. A Time War. The Last Great Time War. My people fought a race called the Daleks, for the sake of all creation. And they lost. We lost. Everyone lost. They're all gone now. My family. My friends. Even that sky. Please, when Torchwood comes to write my complete history, don't tell people I travelled through time and space with her mother! It is! It's the city of New New York! Strictly speaking, it's the fifteenth New York since the original, so that makes it New-New-New-New-New-New-New-New-New-New-New-New-New-New-New New York.</p>
 
     <p>Goodbye...my Sarah Jane! Allons-y! Aw, I wanted to be ginger! I've never been ginger! And you, Rose Tyler! Fat lot of good you were! You gave up on me! Ooh, that's rude. Is that the sort of man I am now? Am I rude? Rude and not ginger. You need to get yourself a better dictionary. When you do, look up 'genocide'. You'll find a little picture of me there, and the caption'll read 'Over my dead body'. Don't you think she looks tired? Blimey, trying to make an Ood laugh... There's something else I've always wanted to say: Allons-y, Alonso!
 
