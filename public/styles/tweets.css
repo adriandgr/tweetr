@@ -1,55 +1,55 @@
-.tweets{
-  margin: 0 2em;
+#tweets{
   border-radius: .5em;
   border: 1px solid #cacaca;
+  margin: 0 2em;
 }
 article.tweet header {
-  padding: 8px;
-  border-radius: .5em .5em 0 0;
   background: #f3f3f3;
-  line-height: 2em;
+  border-radius: .5em .5em 0 0;
   height: 66px;
+  line-height: 2em;
+  padding: 8px;
 }
 
 article.tweet footer {
+  border-radius: 0 0 .5em .5em;
   border-top: 1px solid #cacaca;
-  padding-left: 10px;
   font-size: .75em;
   line-height: 2em;
-  border-radius: 0 0 .5em .5em;
+  padding-left: 10px;
 }
 
 .tweet i {
   color: #79c3b7;
-  visibility: hidden;
-  margin-right: 5px;
-  line-height: 2em;
   float: right;
+  line-height: 2em;
+  margin-right: 5px;
+  visibility: hidden;
 }
 .tweet:hover i {
   visibility: visible;
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
-  float: left;
   border-radius: .5em;
+  float: left;
+  height: 50px;
+  width: 50px;
 }
 
 .user-handle {
- /* margin: 0;*/
   color: #9f9f9f;
-  line-height: 3em;
   float: right;
   font-size: .9em;
+  line-height: 3em;
 }
 
 .tweet main {
   height: 100px;
 }
 
-.tweet main article{
+.tweet main p {
+  margin: 0;
   padding: 0 10px;
   position: relative;
   top: 50%;

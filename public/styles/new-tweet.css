@@ -3,8 +3,7 @@
   border-radius: .5em;
   border: 1px solid #cacaca;
   left: 0;
-  margin: 1em 2em;
-  margin-bottom: 40px;
+  margin: 4em 2em;
   position: relative;
   right: 0;
   top: 20px;
@@ -22,10 +21,9 @@
 
 }
 .new-tweet textarea {
+  margin-bottom: 5px;
   padding: .5em;
   width: 100%;
-  margin-bottom: 5px;
-
 }
 
 .new-tweet input span {
