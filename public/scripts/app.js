@@ -4,53 +4,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-// Test / driver code (temporary). Eventually will get this from the server.
-var data = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
 
 function calculateDaysSincePostDate(postDate){
   let post = new Date(postDate);
@@ -61,9 +14,9 @@ function calculateDaysSincePostDate(postDate){
 
 function createHeader(data) {
   let $header = $('<header></header>');
-  $header.append($('<img class="avatar">').attr('src', data.user.avatars.regular));
-  $header.append($('<h2></h2>').text(data.user.name));
-  $header.append($('<span class="user-handle"></span>').text(data.user.handle));
+  $header.append($('<img class="avatar">').attr('src', data.user.avatars.regular))
+         .append($('<h2></h2>').text(data.user.name))
+         .append($('<span class="user-handle"></span>').text(data.user.handle));
   return $header;
 }
 
@@ -84,20 +37,64 @@ function createFooter(data) {
 
 function createTweetElement(tweet) {
   let $article = $('<article class="tweet"></article>');
-  $article.append(createHeader(tweet));
-  $article.append(createBody(tweet));
-  $article.append(createFooter(tweet));
+  $article.append(createHeader(tweet))
+          .append(createBody(tweet))
+          .append(createFooter(tweet));
   return $article;
 }
 
 function renderTweets(tweets) {
-  let $tweetDeck = $('<section id="tweets"></section>');
   for (let tweet in tweets){
-    $tweetDeck.append(createTweetElement(tweets[tweet]));
+    $( createTweetElement(tweets[tweet]) ).prependTo( '#tweets' );
   }
-  return $tweetDeck;
 }
+
+// // // // // // // //
+
 $(document).ready(()=> {
-  $('.container').append(renderTweets(data));
+
+  function tweetLoader() {
+    $.ajax({
+      type: 'GET',
+      url: '/tweets'
+    }).then((result) => {
+      if (!arguments.length) {
+        $('.container').append(renderTweets(result));
+      } else {
+        let newTweet = result.slice(result.length - 1);
+        $('.container').append(renderTweets(newTweet));
+      }
+    });
+  }
+
+  $('#compose-btn').on('click', ()=> {
+    $('.new-tweet').slideToggle( 350 );
+  });
+
+
+  $('.new-tweet form').on('submit', (e) => {
+    e.preventDefault();
+    let $formData = $('.new-tweet form');
+    // TODO, get formData in an easier way
+    let formLength = $formData["0"].firstChild.nextElementSibling.textLength;
+    if (formLength === 0){
+      let $emptyTweet = $('<span>Don\'t be a shy birdy... Tweet text area may not be empty.</span>');
+      Materialize.toast($emptyTweet, 5000);
+    } else if ( formLength > 140 ){
+      let $tweetOverflow = $('<span>Aren\'t you a chatty bird... Tweet exceeds 140 character limit!</span>');
+      Materialize.toast($tweetOverflow, 5000);
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: '/tweets',
+        data: $formData.serialize()
+      }).then(tweetLoader);
+    }
+  });
+
+  tweetLoader();
+
 });
+
+
 

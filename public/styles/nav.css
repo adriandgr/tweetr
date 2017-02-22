@@ -23,3 +23,48 @@
   line-height: 80px;
   padding: 0 10px;
 }
+
+/*COMPOSE BUTTON*/
+
+#compose-btn {
+  margin-top: 16px;
+  float:right;
+  position: relative;
+  background-color: #292929;
+  border: none;
+  font-size: 1.25em;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  /*width: 120px;*/
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#compose-btn:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+
+#compose-btn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+#compose-btn:focus {
+  outline: 0;
+}
