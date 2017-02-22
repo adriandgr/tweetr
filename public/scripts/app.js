@@ -56,29 +56,29 @@ function calculateDaysSincePostDate(postDate){
   let post = new Date(postDate);
   let today = new Date();
   let timeDiff = Math.abs(today.getTime() - post.getTime());
-  return Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return Number(Math.ceil(timeDiff / (1000 * 3600 * 24)));
 }
 
 function createHeader(data) {
   let $header = $('<header></header>');
-  $header.append($(`<img class="avatar" src="${data.user.avatars.regular}">`));
-  $header.append($(`<h2>${data.user.name}</h2>`));
-  $header.append($(`<span class="user-handle">${data.user.handle}</span>`));
+  $header.append($('<img class="avatar">').attr('src', data.user.avatars.regular));
+  $header.append($('<h2></h2>').text(data.user.name));
+  $header.append($('<span class="user-handle"></span>').text(data.user.handle));
   return $header;
 }
 
 function createBody(data) {
   let $body = $('<main></main>');
-  $body.append(`<p>${data.content.text}</p>`);
+  $body.append($('<p></p>').text(data.content.text));
   return $body;
 }
 
 function createFooter(data) {
   let $footer = $('<footer></footer>');
-  $footer.append(`${calculateDaysSincePostDate(data.created_at)} days ago`);
-  $footer.append('<i class="fa fa-flag" aria-hidden="true"></i>');
-  $footer.append('<i class="fa fa-retweet" aria-hidden="true"></i>');
-  $footer.append('<i class="fa fa-heart" aria-hidden="true"></i>');
+  $footer.append(`${calculateDaysSincePostDate(data.created_at)} days ago`)
+         .append('<i class="fa fa-flag" aria-hidden="true"></i>')
+         .append('<i class="fa fa-retweet" aria-hidden="true"></i>')
+         .append('<i class="fa fa-heart" aria-hidden="true"></i>');
   return $footer;
 }
 
@@ -95,7 +95,6 @@ function renderTweets(tweets) {
   for (let tweet in tweets){
     $tweetDeck.append(createTweetElement(tweets[tweet]));
   }
-  console.log($tweetDeck);
   return $tweetDeck;
 }
 $(document).ready(()=> {

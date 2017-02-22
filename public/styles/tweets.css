@@ -1,8 +1,23 @@
+
+/* TWEETS CONTAINER */
 #tweets{
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 2em 2em;
+}
+
+article.tweet {
   border-radius: .5em;
   border: 1px solid #cacaca;
-  margin: 0 2em;
+  margin-bottom: 1em;
+
 }
+
+article.tweet:hover {
+  border: 1px solid #919191;
+}
+
+/* TWEET HEADER */
 article.tweet header {
   background: #f3f3f3;
   border-radius: .5em .5em 0 0;
@@ -10,7 +25,44 @@ article.tweet header {
   line-height: 2em;
   padding: 8px;
 }
+article.tweet:hover header {
+  background: #eeeeee;
+}
+.avatar {
+  border-radius: .5em;
+  float: left;
+  height: 50px;
+  width: 50px;
+}
+.tweet h2 {
+  color: #6a7d84;
+  display: inline-block;
+  margin: 0 0 0 .5em;
+  padding-top: 10px;
+}
+.user-handle {
+  color: #9f9f9f;
+  float: right;
+  font-size: .9em;
+  line-height: 3em;
+}
+article.tweet:hover .user-handle {
+  color: #7f7f7f;
+}
 
+/* TWEET BODY */
+.tweet main {
+  height: 100px;
+}
+.tweet main p {
+  margin: 0;
+  padding: 0 10px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* TWEET FOOTER */
 article.tweet footer {
   border-radius: 0 0 .5em .5em;
   border-top: 1px solid #cacaca;
@@ -18,7 +70,9 @@ article.tweet footer {
   line-height: 2em;
   padding-left: 10px;
 }
-
+article.tweet:hover footer {
+  border-top: 1px solid #919191;
+}
 .tweet i {
   color: #79c3b7;
   float: right;
@@ -29,36 +83,6 @@ article.tweet footer {
 .tweet:hover i {
   visibility: visible;
 }
-
-.avatar {
-  border-radius: .5em;
-  float: left;
-  height: 50px;
-  width: 50px;
-}
-
-.user-handle {
-  color: #9f9f9f;
-  float: right;
-  font-size: .9em;
-  line-height: 3em;
-}
-
-.tweet main {
-  height: 100px;
-}
-
-.tweet main p {
-  margin: 0;
-  padding: 0 10px;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.tweet h2 {
-  color: #6a7d84;
-  display: inline-block;
-  margin: 0 0 0 .5em;
-  padding-top: 10px;
+i:hover {
+  color: #43a293;
 }
