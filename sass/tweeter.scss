@@ -1,0 +1,39 @@
+/*!
+ * Tweeter App | Feb. 2017 (LHL Project)
+ * Adrian Diaz
+ */
+
+@import 'variables';
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/*
+ * Global layout stuff
+ */
+
+body {
+  background-color: $bg-color;
+  color: $primary;
+  font-family: $roboto;
+  margin: 0;
+}
+
+/*
+ * Additional CSS can be defined below or in other CSS files, as per instructions
+ */
+
+.container {
+/*background: #fff;*/
+margin: 160px auto 0 auto;
+width: 450px;
+}
+
+@import 'material-toast';
+@import 'tweets';
+@import 'nav-bar';
+@import 'new-tweet';

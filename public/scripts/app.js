@@ -49,7 +49,8 @@ function renderTweets(tweets) {
   }
 }
 
-// // // // // // // //
+
+// ON Document ready
 
 $(document).ready(()=> {
 
@@ -74,20 +75,18 @@ $(document).ready(()=> {
 
   $('.new-tweet form').on('submit', (e) => {
     e.preventDefault();
-    let $formData = $('.new-tweet form');
-    // TODO, get formData in an easier way
-    let formLength = $formData["0"].firstChild.nextElementSibling.textLength;
-    if (formLength === 0){
+    let $formData = $('.new-tweet textarea').val().trim();
+    if ($formData.length === 0){
       let $emptyTweet = $('<span>Don\'t be a shy birdy... Tweet text area may not be empty.</span>');
       Materialize.toast($emptyTweet, 5000);
-    } else if ( formLength > 140 ){
+    } else if ( $formData.length > 140 ){
       let $tweetOverflow = $('<span>Aren\'t you a chatty bird... Tweet exceeds 140 character limit!</span>');
       Materialize.toast($tweetOverflow, 5000);
     } else {
       $.ajax({
         type: 'POST',
         url: '/tweets',
-        data: $formData.serialize()
+        data: { text: $formData }
       }).then(tweetLoader);
     }
   });
@@ -95,6 +94,3 @@ $(document).ready(()=> {
   tweetLoader();
 
 });
-
-
-

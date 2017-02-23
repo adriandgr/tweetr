@@ -1,9 +1,11 @@
+/*
+ *  _tweets.scss partial
+ */
 
 /* TWEETS CONTAINER */
 #tweets{
-  box-sizing: border-box;
   display: inline-block;
-  margin: 2em 2em;
+  margin: $space;
 }
 
 article.tweet {
@@ -22,7 +24,7 @@ article.tweet header {
   background: #f3f3f3;
   border-radius: .5em .5em 0 0;
   height: 66px;
-  line-height: 2em;
+  line-height: $space;
   padding: 8px;
 }
 article.tweet:hover header {
@@ -76,9 +78,9 @@ article.tweet:hover footer {
   border-top: 1px solid #919191;
 }
 .tweet i {
-  color: #79c3b7;
+  color: $i;
   float: right;
-  line-height: 2em;
+  line-height: $space;
   margin-right: 5px;
   visibility: hidden;
 }
@@ -86,5 +88,5 @@ article.tweet:hover footer {
   visibility: visible;
 }
 i:hover {
-  color: #43a293;
+  color: $i-hover;
 }
