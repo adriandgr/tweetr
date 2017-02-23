@@ -52,6 +52,7 @@ article.tweet:hover .user-handle {
 
 /* TWEET BODY */
 .tweet main {
+  background-color: #ffffff;
   height: 100px;
 }
 .tweet main p {
@@ -64,6 +65,7 @@ article.tweet:hover .user-handle {
 
 /* TWEET FOOTER */
 article.tweet footer {
+  background-color: #ffffff;
   border-radius: 0 0 .5em .5em;
   border-top: 1px solid #cacaca;
   font-size: .75em;
