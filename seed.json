@@ -1,0 +1,5 @@
+{
+	"undefined": "localhost/tweeter",
+	"dev": "localhost/tweeter",
+	"prod": "localhost/tweeter"
+}

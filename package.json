@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
     "local": "./node_modules/.bin/nodemon --watch server -e js server/index.js",
-    "resetDB": "mongo tweeter --eval \"db.dropDatabase();\""
+    "clearDB": "mongo tweeter --eval \"db.dropDatabase();\"",
+    "resetDB": "seed"
   },
   "author": "Lighthouse Labs",
   "license": "ISC",
