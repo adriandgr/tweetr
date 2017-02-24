@@ -5,39 +5,52 @@
 #nav-bar {
   background: $nav-bar;
   color: #e8fdff;
-  height: 80px;
+  height: 60px;
   left:   0;
-  padding: 0 2em;
+  padding: 0 $space-desk;
   position: fixed;
   right:0;
   top: 0;
   z-index: 1000;
+  @media (min-width: $desktop-breakpoint){
+    height: 80px;
+    padding: 0 $space-desk;
+  }
 }
 
 #nav-bar .logo {
   float: left;
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
+  @media (min-width: $desktop-breakpoint){
+    height: 80px;
+    width: 80px;
+  }
 }
 
 #nav-bar .header {
   float: left;
-  font-size: 200%;
-  line-height: 80px;
+  font-size: 185%;
+  line-height: 60px;
   padding: 0 10px;
+  @media (min-width: $desktop-breakpoint){
+    font-size: 200%;
+    line-height: 80px;
+    padding: 0 10px;
+  }
 }
 
 /*COMPOSE BUTTON*/
 
-#compose-btn {
-  margin-top: 16px;
-  float:right;
+.nav-btn {
+  margin: 12px 12px 0 0;
+  float: right;
   position: relative;
   background-color: #292929;
   border: none;
   font-size: 1.25em;
   color: #FFFFFF;
-  padding: 12px 20px;
+  padding: 6px 20px;
   /*width: 120px;*/
   text-align: center;
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -45,9 +58,15 @@
   text-decoration: none;
   overflow: hidden;
   cursor: pointer;
+ @media (min-width: $desktop-breakpoint){
+    margin-top: 16px;
+    padding: 12px 20px;
+    font-size: 1.25em;
+  }
+
 }
 
-#compose-btn:after {
+.nav-btn:after {
     content: "";
     background: #f1f1f1;
     display: block;
@@ -60,13 +79,17 @@
     transition: all 0.8s
 }
 
-#compose-btn:active:after {
+.nav-btn:active:after {
     padding: 0;
     margin: 0;
     opacity: 1;
     transition: 0s
 }
 
-#compose-btn:focus {
+.nav-btn:focus {
   outline: 0;
+}
+
+#compose-btn{
+  display: none;
 }

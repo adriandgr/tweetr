@@ -4,8 +4,10 @@
 
 /* TWEETS CONTAINER */
 #tweets{
+  left: 0;
+  right: 0;
   display: inline-block;
-  margin: $space;
+  margin: $space-desk;
 }
 
 article.tweet {
@@ -24,7 +26,7 @@ article.tweet header {
   background: #f3f3f3;
   border-radius: .5em .5em 0 0;
   height: 66px;
-  line-height: $space;
+  line-height: $space-desk;
   padding: 8px;
 }
 article.tweet:hover header {
@@ -80,7 +82,7 @@ article.tweet:hover footer {
 .tweet i {
   color: $i;
   float: right;
-  line-height: $space;
+  line-height: $space-desk;
   margin-right: 5px;
   visibility: hidden;
 }

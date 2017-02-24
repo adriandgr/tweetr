@@ -68,14 +68,19 @@ $(document).ready(()=> {
     });
   }
 
+
   $('#compose-btn').on('click', ()=> {
-    $('.new-tweet').slideToggle( 350 );
+    $('#new-tweet').slideToggle( 350 );
+  });
+
+  $('#login-btn').on('click', ()=> {
+    $('#login-view').slideToggle( 350 );
   });
 
 
-  $('.new-tweet form').on('submit', (e) => {
+  $('#new-tweet form').on('submit', (e) => {
     e.preventDefault();
-    let $formData = $('.new-tweet textarea').val().trim();
+    let $formData = $('#new-tweet textarea').val().trim();
     if ($formData.length === 0){
       let $emptyTweet = $('<span>Don\'t be a shy birdy... Tweet text area may not be empty.</span>');
       Materialize.toast($emptyTweet, 5000);

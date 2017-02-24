@@ -16,8 +16,11 @@
     "body-parser": "^1.15.2",
     "chance": "^1.0.2",
     "express": "^4.13.4",
+    "g": "^2.0.1",
     "md5": "^2.1.0",
-    "mongodb": "^2.2.24"
+    "mongodb": "^2.2.24",
+    "node-sass": "^4.5.0",
+    "node-sass-middleware": "^0.11.0"
   },
   "devDependencies": {
     "nodemon": "^1.9.2"

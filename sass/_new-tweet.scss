@@ -2,35 +2,35 @@
  * _new-tweet.scss partial
  */
 
-.new-tweet {
+#new-tweet {
   background: $bg-color;
   border-radius: $rad;
   border: 1px solid #cacaca;
   display: none;
   left: 0;
-  margin: 4em $space;
+  margin: 4em $space-desk;
   position: relative;
   right: 0;
   top: 20px;
 }
 
-.new-tweet form, .new-tweet h2 {
+#new-tweet form, #new-tweet h2 {
   margin: $rad 15px;
 }
 
-.new-tweet h2 {
+#new-tweet h2 {
   border-bottom: 2px solid $primary;
 }
 
-.new-tweet textarea {
+#new-tweet textarea {
   margin-bottom: 5px;
   padding: $rad;
   width: 100%;
 }
 
-.new-tweet input span {
+#new-tweet input span {
   display: inline-block;
 }
-.new-tweet span {
+#new-tweet span {
   float: right;
 }

@@ -2,8 +2,10 @@
  * Tweeter App | Feb. 2017 (LHL Project)
  * Adrian Diaz
  */
-
+@import 'neat/neat';
+@import 'bourbon/bourbon';
 @import 'variables';
+
 
 html {
   box-sizing: border-box;
@@ -21,6 +23,10 @@ body {
   color: $primary;
   font-family: $roboto;
   margin: 0;
+  @media (min-width: $desktop-breakpoint){
+    margin: 0;
+  }
+
 }
 
 /*
@@ -28,12 +34,15 @@ body {
  */
 
 .container {
-/*background: #fff;*/
-margin: 160px auto 0 auto;
-width: 450px;
+  margin: 60px auto 0 auto;
+  max-width: 450px;
+  @media (min-width: $desktop-breakpoint){
+    margin: 160px auto 0 auto;
+  }
 }
 
 @import 'material-toast';
 @import 'tweets';
 @import 'nav-bar';
 @import 'new-tweet';
+@import 'login-view';

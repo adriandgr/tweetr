@@ -3,15 +3,18 @@
   <head>
     <!-- Meta Information -->
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Tweeter</title>
     <link rel="icon" type="image/png" href="/images/bird-96x96.png" sizes="96x96">
 
     <!-- App Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/font-awesome.min.css">
     <!-- App CSS -->
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+
     <link rel="stylesheet" href="/styles/tweeter.css">
   </head>
 
@@ -21,18 +24,36 @@
     <nav id="nav-bar" data-my-thing="">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
-      <button id="compose-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> compose</button>
+      <button class="nav-btn" id="compose-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> compose</button>
+      <button class="nav-btn" id="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i> login</button>
     </nav>
 
     <main class="container">
       <!-- compose tweet form, toggled w/ nav-bar button -->
-      <section class="new-tweet">
+      <section id="new-tweet">
         <h2>Compose Tweet</h2>
         <form action="/tweets" method="POST">
+        <div class="input-field">
           <textarea name="text" placeholder="What are you humming about?"></textarea>
+          </div>
           <input type="submit" value="Tweet">
           <span class="counter">140</span>
         </form>
+      </section>
+
+
+      <section id="login-view">
+        <form class="mui-form" action="/users/session" method="POST">
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="uname">
+            <label>user</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="usr-pwd">
+            <label>password</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn--primary">login</button>
+      </form>
       </section>
 
       <!-- tweet section populated by jQuery -->
@@ -43,6 +64,7 @@
 
     <!-- App JS -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="//cdn.muicss.com/mui-0.9.9/extra/mui-combined.min.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
