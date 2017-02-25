@@ -57,14 +57,28 @@ $(document).ready(()=> {
   function tweetLoader() {
     $.ajax({
       type: 'GET',
-      url: '/tweets'
+      url: '/tweets',
+      statusCode: {
+        201: function() {
+          if ($( "#login-btn" ).data( "ui-state" ) === 'visible') {
+            $('#compose-btn').toggle();
+            $('#logout-btn').toggle();
+            $('#login-btn').toggle();
+            $( "#login-btn" ).data( "ui-state", 'hidden' );
+          }
+        }
+      }
     }).then((result) => {
+      //console.log(arguments)
       if (!arguments.length) {
+        //console.log(xhr.status);
         $('.container').append(renderTweets(result));
       } else {
         let newTweet = result.slice(result.length - 1);
         $('.container').append(renderTweets(newTweet));
       }
+    }).catch((a, b) =>{
+      console.log(arguments);
     });
   }
 
@@ -75,6 +89,20 @@ $(document).ready(()=> {
 
   $('#login-btn').on('click', ()=> {
     $('#login-view').slideToggle( 350 );
+  });
+
+  $('#logout-btn').on('click', ()=> {
+    $.ajax({
+        type: 'DELETE',
+        url: '/users/session'
+    }).then((res) => {
+      $('#compose-btn').toggle();
+      $('#logout-btn').toggle();
+      $('#login-btn').toggle();
+      let $logoutMssg = $('<span>See you later.</span>');
+      Materialize.toast($logoutMssg, 5000);
+      console.log('ajax res', res);
+    });
   });
 
 
@@ -93,6 +121,36 @@ $(document).ready(()=> {
         url: '/tweets',
         data: { text: $formData }
       }).then(tweetLoader);
+    }
+  });
+
+  $('#login-view form').on('submit', (e) => {
+    e.preventDefault();
+    let $uname = $('#login-view #uname').val().trim();
+    let $usrPwd = $('#login-view #usr-pwd').val().trim();
+
+
+    if ($uname.length === 0 || $usrPwd.length === 0) {
+      let $emptyTweet = $('<span>Don\'t be a shy birdy... fill in all login fields.</span>');
+      Materialize.toast($emptyTweet, 5000);
+    } else {
+      $('#login-view form').trigger("reset");
+      $.ajax({
+        type: 'PUT',
+        url: '/users/session',
+        data: {
+          uname: $uname,
+          usrPwd: $usrPwd
+        }
+      }).then((res) => {
+        $('#login-view').slideToggle( 'slow', () =>{
+          $('#compose-btn').toggle();
+          $('#logout-btn').toggle();
+          $('#login-btn').toggle();
+        });
+
+        console.log('ajax res', res);
+      });
     }
   });
 

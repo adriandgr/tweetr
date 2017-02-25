@@ -25,7 +25,8 @@
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
       <button class="nav-btn" id="compose-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> compose</button>
-      <button class="nav-btn" id="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i> login</button>
+      <button class="nav-btn" id="login-btn" data-ui-state="visible"><i class="fa fa-sign-in" aria-hidden="true"></i> login</button>
+      <button class="nav-btn" id="logout-btn"><i class="fa fa-sign-out" aria-hidden="true"></i> logout</button>
     </nav>
 
     <main class="container">
@@ -45,11 +46,11 @@
       <section id="login-view">
         <form class="mui-form" action="/users/session" method="POST">
           <div class="mui-textfield mui-textfield--float-label">
-            <input type="uname">
+            <input type="uname" id="uname">
             <label>user</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
-            <input type="usr-pwd">
+            <input type="password" id="usr-pwd">
             <label>password</label>
           </div>
           <button type="submit" class="mui-btn mui-btn--primary">login</button>

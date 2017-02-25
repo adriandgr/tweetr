@@ -6,26 +6,30 @@ var usersRoutes = express.Router();
 
 module.exports = function(DataHelpers) {
 
-  usersRoutes.post("/session", function(req, res) {
-    console.log('req', req.body)
-    if (!req.body.uname || !req.body.usr-pwd) {
+  usersRoutes.put("/session", function(req, res) {
+    console.log('req', req.body);
+    console.log( req.session);
+    if (!req.body.uname || !req.body.usrPwd) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
 
-    const uname = req.body.uname ? req.body.uname : userHelper.generateRandomUser();
-
-    DataHelpers.getUserById(uname, (err) => {
+    DataHelpers.getUserByUname(req, (err, user) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
+        res.status(403).json({ error: err.message });
       } else {
-        res.status(201).send();
+        console.log('last step user object:', user);
+        res.status(201).json({ success: 'logging you in...' });
       }
     });
   });
 
   usersRoutes.delete("/session", function(req, res) {
-
+    console.log(req.session);
+    delete req.session.userId;
+    console.log(req.session);
+    res.status(200).json({ success: 'logging you out...' });
 
   });
 

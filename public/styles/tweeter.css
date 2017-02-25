@@ -87,9 +87,9 @@ body {
   min-height: 48px;
   line-height: 1.5em;
   word-break: break-all;
-  background-color: #323232;
+  background-color: tomato;
   padding: 10px 25px;
-  font-size: 1.1rem;
+  font-size: 1.3em;
   font-weight: 300;
   color: #fff;
   display: -webkit-flex;
@@ -337,6 +337,10 @@ i:hover {
 }
 
 #compose-btn {
+  display: none;
+}
+
+#logout-btn {
   display: none;
 }
 
