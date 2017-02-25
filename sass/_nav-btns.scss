@@ -1,0 +1,63 @@
+/*COMPOSE BUTTON*/
+
+.nav-btn {
+  transform: translateY(-12px);
+  margin: 12px 0px 0 0;
+  float: right;
+  position: relative;
+  background-color: $usr-nav;
+  border: none;
+  font-size: 1.35em;
+  color: #FFFFFF;
+  padding: 7px 20px;
+  /*width: 120px;*/
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+ @media (min-width: $desktop-breakpoint){
+    transform: translateY(-60px);
+    margin: 16px 12px 0 0;
+    padding: 12px 20px;
+    font-size: 1.25em;
+  }
+
+}
+
+.nav-btn:hover {
+  background-color: darken($nav-bar, 3%);
+}
+
+.nav-btn:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.nav-btn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+.nav-btn:focus {
+  outline: 0;
+}
+
+#compose-btn{
+  display: none;
+}
+
+#logout-btn{
+  display: none;
+}

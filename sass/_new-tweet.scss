@@ -12,6 +12,10 @@
   position: relative;
   right: 0;
   top: 20px;
+
+  @media (min-width: $desktop-breakpoint){
+    margin: 4em $space-desk;
+  }
 }
 
 #new-tweet form, #new-tweet h2 {

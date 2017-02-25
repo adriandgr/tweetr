@@ -54,20 +54,22 @@ function renderTweets(tweets) {
 
 $(document).ready(()=> {
 
+  $.get('/users/session', (data, status) => {
+    if ($( "#login-btn" ).data( "ui-state" ) === 'visible') {
+      $('#compose-btn').toggle();
+      $('#logout-btn').toggle();
+      $('#login-btn').toggle();
+      $( "#login-btn" ).data( "ui-state", 'hidden' );
+    }
+    console.log(data);
+    console.log(status);
+  });
+
+
   function tweetLoader() {
     $.ajax({
       type: 'GET',
-      url: '/tweets',
-      statusCode: {
-        201: function() {
-          if ($( "#login-btn" ).data( "ui-state" ) === 'visible') {
-            $('#compose-btn').toggle();
-            $('#logout-btn').toggle();
-            $('#login-btn').toggle();
-            $( "#login-btn" ).data( "ui-state", 'hidden' );
-          }
-        }
-      }
+      url: '/tweets'
     }).then((result) => {
       //console.log(arguments)
       if (!arguments.length) {
@@ -85,6 +87,26 @@ $(document).ready(()=> {
 
   $('#compose-btn').on('click', ()=> {
     $('#new-tweet').slideToggle( 350 );
+  });
+
+  $('#login-view i').on('click', ()=> {
+    $('#login-view').slideToggle( 350 );
+  });
+
+  $('#register-view i').on('click', ()=> {
+    $('#register-view').slideToggle( 350 );
+  });
+
+  $('#register').on('click', ()=> {
+    $('#login-view').slideToggle( 350 , ()=>{
+      $('#register-view').slideToggle( 350 );
+    });
+  });
+
+  $('#login').on('click', ()=> {
+    $('#register-view').slideToggle( 350 , ()=>{
+      $('#login-view').slideToggle( 350 );
+    });
   });
 
   $('#login-btn').on('click', ()=> {

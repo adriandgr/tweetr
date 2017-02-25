@@ -21,13 +21,18 @@
   <body>
 
     <!-- Top nav bar (fixed) -->
-    <nav id="nav-bar" data-my-thing="">
+    <nav id="nav-bar" data-ui-state="visible">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
-      <button class="nav-btn" id="compose-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> compose</button>
+
+
+    </nav>
+    <nav id="usr-nav" data-ui-state="hidden">
       <button class="nav-btn" id="login-btn" data-ui-state="visible"><i class="fa fa-sign-in" aria-hidden="true"></i> login</button>
       <button class="nav-btn" id="logout-btn"><i class="fa fa-sign-out" aria-hidden="true"></i> logout</button>
+      <button class="nav-btn" id="compose-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> compose</button>
     </nav>
+
 
     <main class="container">
       <!-- compose tweet form, toggled w/ nav-bar button -->
@@ -44,9 +49,10 @@
 
 
       <section id="login-view">
+      <i class="fa fa-times close-view" aria-hidden="true"></i>
         <form class="mui-form" action="/users/session" method="POST">
           <div class="mui-textfield mui-textfield--float-label">
-            <input type="uname" id="uname">
+            <input type="text" id="uname">
             <label>user</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
@@ -54,6 +60,28 @@
             <label>password</label>
           </div>
           <button type="submit" class="mui-btn mui-btn--primary">login</button>
+          <a id="register" href="#">register</a>
+      </form>
+      </section>
+
+      <section id="register-view">
+        <i class="fa fa-times close-view" aria-hidden="true"></i>
+        <form class="mui-form" action="/users/session" method="POST">
+          <legend>join tweeter</legend>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" id="name">
+            <label>name</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" id="uname">
+            <label>user</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="password" id="usr-pwd">
+            <label>password</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn--primary">register</button>
+          <a id="login" href="#">login</a>
       </form>
       </section>
 

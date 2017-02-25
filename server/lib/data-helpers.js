@@ -1,5 +1,6 @@
 "use strict";
 
+const ObjectID   = require('mongodb').ObjectID;
 const bcrypt     = require('bcrypt');
 const saltRounds = 12;
 
@@ -18,14 +19,45 @@ module.exports = function makeDataHelpers(db) {
       db.collection("tweets").find().toArray(callback);
     },
 
-    getUserByUname: function(pReq, callback) {
+    getUserById: function(userId, callback) {
+      db.collection("users").find({'_id': ObjectID(`${userId}`)}).toArray( (err, result) => {
+        if (err) {
+          return callback(err);
+        }
+        delete result[0].usrPwd;
+        callback(null, result);
+      });
+    },
+
+    authUserByUname: function(pReq, callback) {
+      db.collection("users").find({uname: pReq.body.uname}).toArray( (err, result) => {
+        if (err) {
+          return callback(err);
+        }
+
+        if (!result.length) {
+          console.log('auth failure :/  >> no user found');
+          return callback(new Error('Authentication failure'), null);
+        }
+        bcrypt.compare(pReq.body.usrPwd, result[0].usrPwd, function(err, pass) {
+          if (pass) {
+            pReq.session.userId = result[0]['_id'];
+            console.log('success! set session to:', pReq.session.userId );
+            return callback(null, result);
+          }
+          console.log('auth failure :/  >> hash compare failed');
+          callback(new Error('Authentication failure'), null);
+        });
+      }); // end of db.collection
+
+    },
+    registerUser: function(pReq, callback) {
       console.log('pReq', pReq.session);
       db.collection("users").find({uname: pReq.body.uname}).toArray( (err, result) => {
         if (err) {
           return callback(err);
         }
 
-        // console.log('req body:', pReq.body);
         if (result.length > 0) {
           console.log('mongoHash', result[0].usrPwd);
           bcrypt.compare(pReq.body.usrPwd, result[0].usrPwd, function(err, pass) {
@@ -37,11 +69,6 @@ module.exports = function makeDataHelpers(db) {
             } else {
               console.log('auth failure :/  >> hash compare failed');
               callback(new Error('Authentication failure'), null);
-              //DO something to return a 400
-              // res.status(400).render('statuses', { status: {
-              //   code: '400 Bad Request',
-              //   reason: `authentication failure`,
-              //   forgot: true }});
             }
           });
         } else {
