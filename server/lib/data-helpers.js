@@ -1,5 +1,6 @@
 "use strict";
 
+const userHelper = require("./util/user-helper");
 const ObjectID   = require('mongodb').ObjectID;
 const bcrypt     = require('bcrypt');
 const saltRounds = 12;
@@ -29,8 +30,8 @@ module.exports = function makeDataHelpers(db) {
       });
     },
 
-    authUserByUname: function(pReq, callback) {
-      db.collection("users").find({uname: pReq.body.uname}).toArray( (err, result) => {
+    authUserByHandle: function(pReq, callback) {
+      db.collection("users").find({handle: pReq.body.handle}).toArray( (err, result) => {
         if (err) {
           return callback(err);
         }
@@ -51,30 +52,30 @@ module.exports = function makeDataHelpers(db) {
       }); // end of db.collection
 
     },
+
     registerUser: function(pReq, callback) {
-      console.log('pReq', pReq.session);
-      db.collection("users").find({uname: pReq.body.uname}).toArray( (err, result) => {
+      db.collection("users").find({handle: pReq.body.handle}).toArray( (err, result) => {
         if (err) {
           return callback(err);
         }
 
         if (result.length > 0) {
-          console.log('mongoHash', result[0].usrPwd);
-          bcrypt.compare(pReq.body.usrPwd, result[0].usrPwd, function(err, pass) {
-            if (pass) {
-              pReq.session.userId = result[0]['_id'];
-              console.log('success! set session to:', pReq.session.userId );
-              //res.redirect('/');
-              callback(null, result);
-            } else {
-              console.log('auth failure :/  >> hash compare failed');
-              callback(new Error('Authentication failure'), null);
-            }
-          });
-        } else {
-          console.log('auth failure :/  >> no user found');
-          callback(new Error('Authentication failure'), null);
+          callback(new Error('User already exists!'), null);
+          return;
         }
+
+        bcrypt.hash(pReq.body.usrPwd, saltRounds, function(err, hash) {
+          // Store hash in your password DB.
+          if (err) {
+            callback(err, null);
+            return;
+          }
+          const newUser = userHelper.generateUserObject(pReq.body.name, pReq.body.handle, hash);
+          db.collection("users").insertOne(newUser).then((res) => {
+            callback(null, res.insertedId);
+          });
+        });
+
 
       }); // end of db.collection
 

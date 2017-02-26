@@ -30,14 +30,8 @@ body {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 .container {
-  margin: 100px auto 0 auto;
+  margin: 120px auto 0 auto;
   max-width: 450px;
-}
-
-@media (min-width: 768px) {
-  .container {
-    margin: 160px auto 0 auto;
-  }
 }
 
 /*

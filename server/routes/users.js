@@ -6,6 +6,21 @@ var usersRoutes = express.Router();
 
 module.exports = function(DataHelpers) {
 
+  usersRoutes.post("/", (req, res) => {
+    if (!req.body.name || !req.body.handle || !req.body.usrPwd) {
+      res.status(400).json({ error: 'invalid request: no data in POST body'});
+      return;
+    }
+    DataHelpers.registerUser(req, (err, insertedId) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      req.session.userId = insertedId;
+      res.status(201).json({ success: 'welcome to tweeter! logging you in...' });
+    });
+  });
+
   usersRoutes.get('/session', (req, res) => {
     if(req.session.userId) {
       DataHelpers.getUserById(req.session.userId, (err, user) => {
@@ -13,7 +28,7 @@ module.exports = function(DataHelpers) {
           res.status(500).json({ error: err.message });
           return;
         }
-        console.log('last step user object:', user);
+        console.log('current session user:', user);
         res.status(200).json({ user: user});
       });
       return;
@@ -21,48 +36,25 @@ module.exports = function(DataHelpers) {
     res.status(403).json({ msg: 'no user is logged in.' });
   });
 
-  usersRoutes.post("/", (req, res) => {
-    console.log('req', req.body);
-    console.log( req.session);
-    if (!req.body.uname || !req.body.usrPwd) {
-      res.status(400).json({ error: 'invalid request: no data in POST body'});
-      return;
-    }
-
-    DataHelpers.registerUser(req, (err, user) => {
-      if (err) {
-        console.log(err);
-        res.status(403).json({ error: err.message });
-        return;
-      }
-      console.log('last step user object:', user);
-      res.status(201).json({ success: 'welcome to tweeter! logging you in...' });
-    });
-  });
-
   usersRoutes.put("/session", (req, res) => {
     console.log('req', req.body);
     console.log( req.session);
-    if (!req.body.uname || !req.body.usrPwd) {
+    if (!req.body.handle || !req.body.usrPwd) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
 
-    DataHelpers.authUserByUname(req, (err, user) => {
+    DataHelpers.authUserByHandle(req, (err, user) => {
       if (err) {
-        console.log(err)
         res.status(403).json({ error: err.message });
       } else {
-        console.log('last step user object:', user);
         res.status(201).json({ success: 'logging you in...' });
       }
     });
   });
 
   usersRoutes.delete("/session", function(req, res) {
-    console.log(req.session);
     delete req.session.userId;
-    console.log(req.session);
     res.status(200).json({ success: 'logging you out...' });
 
   });

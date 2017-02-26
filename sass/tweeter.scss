@@ -34,11 +34,8 @@ body {
  */
 
 .container {
-  margin: 100px auto 0 auto;
+  margin: 120px auto 0 auto;
   max-width: 450px;
-  @media (min-width: $desktop-breakpoint){
-    margin: 160px auto 0 auto;
-  }
 }
 
 @import 'material-toast';

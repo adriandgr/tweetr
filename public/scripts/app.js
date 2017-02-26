@@ -16,7 +16,7 @@ function createHeader(data) {
   let $header = $('<header></header>');
   $header.append($('<img class="avatar">').attr('src', data.user.avatars.regular))
          .append($('<h2></h2>').text(data.user.name))
-         .append($('<span class="user-handle"></span>').text(data.user.handle));
+         .append($('<span class="user-handle"></span>').text(`@${data.user.handle}`));
   return $header;
 }
 
@@ -66,10 +66,13 @@ $(document).ready(()=> {
   });
 
 
-  function tweetLoader() {
+  function tweetLoader(num) {
     $.ajax({
       type: 'GET',
-      url: '/tweets'
+      url: '/tweets',
+      data: {
+        render: num
+      }
     }).then((result) => {
       //console.log(arguments)
       if (!arguments.length) {
@@ -148,32 +151,67 @@ $(document).ready(()=> {
 
   $('#login-view form').on('submit', (e) => {
     e.preventDefault();
-    let $uname = $('#login-view #uname').val().trim();
+    let $handle = $('#login-view #handle').val().trim();
     let $usrPwd = $('#login-view #usr-pwd').val().trim();
-
-
-    if ($uname.length === 0 || $usrPwd.length === 0) {
+    if ($handle.length === 0 || $usrPwd.length === 0) {
       let $emptyTweet = $('<span>Don\'t be a shy birdy... fill in all login fields.</span>');
       Materialize.toast($emptyTweet, 5000);
-    } else {
-      $('#login-view form').trigger("reset");
-      $.ajax({
-        type: 'PUT',
-        url: '/users/session',
-        data: {
-          uname: $uname,
-          usrPwd: $usrPwd
-        }
-      }).then((res) => {
-        $('#login-view').slideToggle( 'slow', () =>{
-          $('#compose-btn').toggle();
-          $('#logout-btn').toggle();
-          $('#login-btn').toggle();
-        });
-
-        console.log('ajax res', res);
-      });
+      return;
     }
+    $.ajax({
+      type: 'PUT',
+      url: '/users/session',
+      data: {
+        handle: $handle,
+        usrPwd: $usrPwd
+      }
+    }).then((res) => {
+      $('#login-view form').trigger("reset");
+      $('#login-view').slideToggle( 'slow', () =>{
+        $('#compose-btn').toggle();
+        $('#logout-btn').toggle();
+        $('#login-btn').toggle();
+      });
+    }).catch(() => {
+      let $authFail = $('<span>Tweet, Tweet... that doesn\'t look right.</span>');
+      Materialize.toast($authFail, 5000);
+    });
+  });
+
+  $('#register-view form').on('submit', (e) => {
+    e.preventDefault();
+    let $name = $('#register-view #name').val().trim();
+    let $handle = $('#register-view #handle').val().trim();
+    let $usrPwd = $('#register-view #usr-pwd').val().trim();
+    if ($name.length === 0 || $handle.length === 0 || $usrPwd.length === 0) {
+      let $emptyTweet = $('<span>Don\'t be a shy birdy... fill in all login fields.</span>');
+      Materialize.toast($emptyTweet, 5000);
+      return;
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/users',
+      data: {
+        name: $name,
+        handle: $handle,
+        usrPwd: $usrPwd
+      }
+    })
+    .then((res) => {
+      $('#register-view form').trigger("reset");
+      $('#register-view').slideToggle( 'slow', () =>{
+        $('#compose-btn').toggle();
+        $('#logout-btn').toggle();
+        $('#login-btn').toggle();
+      });
+    })
+    .catch((res) => {
+      let $cuteTweet = $('<span>Tweet, tweet... A little birdy told me that user already exists!</span>');
+      Materialize.toast($cuteTweet, 4000);
+      let $helpMsg = $('<span>Please choose a different username.</span>');
+      Materialize.toast($helpMsg, 8000);
+    });
   });
 
   tweetLoader();

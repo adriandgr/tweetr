@@ -23,27 +23,41 @@ module.exports = function(DataHelpers) {
   });
 
   tweetsRoutes.post("/", function(req, res) {
+    if (!req.session.userId) {
+      res.status(403).json({ error: 'Unauthenticated request'});
+      return;
+    }
     if (!req.body.text) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
 
-    const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
-    const tweet = {
-      user: user,
-      content: {
-        text: req.body.text
-      },
-      created_at: Date.now()
-    };
-
-    DataHelpers.saveTweet(tweet, (err) => {
+    DataHelpers.getUserById(req.session.userId, (err, dbUser) => {
       if (err) {
         res.status(500).json({ error: err.message });
-      } else {
-        res.status(201).send();
+        return;
       }
+      const user = userHelper.generateUserObject(dbUser[0].name, dbUser[0].handle);
+      const tweet = {
+        user: user,
+        content: {
+          text: req.body.text
+        },
+        created_at: Date.now()
+      };
+
+      DataHelpers.saveTweet(tweet, (err) => {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          res.status(201).send();
+        }
+      });
     });
+
+
+
+
   });
 
   return tweetsRoutes;
