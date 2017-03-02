@@ -27,11 +27,14 @@ function createBody(data) {
 }
 
 function createFooter(data) {
-  let $footer = $('<footer></footer>');
-  $footer.append(`${calculateDaysSincePostDate(data.created_at)} days ago`)
-         .append('<i class="fa fa-flag" aria-hidden="true"></i>')
-         .append('<i class="fa fa-retweet" aria-hidden="true"></i>')
-         .append('<i class="fa fa-heart" aria-hidden="true"></i>');
+  let $footer = $('<footer></footer>').append(`${calculateDaysSincePostDate(data.created_at)} days ago`);
+
+  // Here we reduced the duplication of the entire i tag. These elements seem to be very consistent except for one piece of information.
+  // Chances are any change I make to one, would also be made to the rest. With your previous example if we wanted to modify the icon structure we would have to modify 3 lines of code. This way when we want to make a change to one type of icon (we likely want to make that same change to all the icons) we only have to make it in one place.
+  ['flag', 'retweet', 'heart'].map(name => {
+    $footer.append(`<i class="fa fa-${name}" aria-hidden="true"></i>`);
+  });
+
   return $footer;
 }
 
@@ -53,6 +56,8 @@ function renderTweets(tweets) {
 // ON Document ready
 
 $(document).ready(()=> {
+  const SLIDE_TIME_MILLISECONDS = 350;
+  const TWEET_CHARACTER_MAX = 140;
 
   $.get('/users/session', (data, status) => {
     if ($( "#login-btn" ).data( "ui-state" ) === 'visible') {
@@ -87,33 +92,79 @@ $(document).ready(()=> {
     });
   }
 
+  /*  Contrived example, and seems like it is close to the same amount of code either this way or hardcoded.
+      The point I would like to make here is that if you start to see patterns like this you may be able to accomplish the same task dynamically. What about a situation where you have a bunch of panels on the screen and the configuration changes depending on data?
+
+  [
+    {
+      selector: '#compose-btn',
+      sliders: ['#new-tweet']
+    },
+    {
+      selector: '#login-view i',
+      sliders: '#login-view'
+    },
+    {
+      selector: '#register i',
+      sliders: ['#register-view']
+    },
+    {
+      selector: '#register',
+      sliders: ['#login-view', '#register-view'] 
+    },
+    {
+      selector: '#login',
+      sliders: ['#register-view', '#login-view'] 
+    },
+    {
+      selector: '#login-btn',
+      sliders: ['#login-view'] 
+    }
+  ].forEach(clicker => {
+    $(clicker.selector).on('click', () => {
+      // The goal is to call the sliders sequentially.
+      // We can create a function that checks to see if there are any more slider animations to do.
+      let current = 0;
+      let done = () => {
+        if(current < clicker.sliders.length) {
+          // If there are then do a toggle and pass in the same function so it is called after the slide is complete.
+          $(clicker.sliders[current]).slideToggle(SLIDE_TIME_MILLISECONDS, done);
+        }
+        // If there are no more items to slide, then it won't call 'done()' again and break the loop.
+        current++;
+      }
+
+      done();
+    });
+  });
+  */
 
   $('#compose-btn').on('click', ()=> {
-    $('#new-tweet').slideToggle( 350 );
+    $('#new-tweet').slideToggle( SLIDE_TIME_MILLISECONDS );
   });
 
   $('#login-view i').on('click', ()=> {
-    $('#login-view').slideToggle( 350 );
+    $('#login-view').slideToggle( SLIDE_TIME_MILLISECONDS );
   });
 
   $('#register-view i').on('click', ()=> {
-    $('#register-view').slideToggle( 350 );
+    $('#register-view').slideToggle( SLIDE_TIME_MILLISECONDS );
   });
 
   $('#register').on('click', ()=> {
-    $('#login-view').slideToggle( 350 , ()=>{
-      $('#register-view').slideToggle( 350 );
+    $('#login-view').slideToggle( SLIDE_TIME_MILLISECONDS , ()=>{
+      $('#register-view').slideToggle( SLIDE_TIME_MILLISECONDS );
     });
   });
 
   $('#login').on('click', ()=> {
-    $('#register-view').slideToggle( 350 , ()=>{
-      $('#login-view').slideToggle( 350 );
+    $('#register-view').slideToggle( SLIDE_TIME_MILLISECONDS , ()=>{
+      $('#login-view').slideToggle( SLIDE_TIME_MILLISECONDS );
     });
   });
 
   $('#login-btn').on('click', ()=> {
-    $('#login-view').slideToggle( 350 );
+    $('#login-view').slideToggle( SLIDE_TIME_MILLISECONDS );
   });
 
   $('#logout-btn').on('click', ()=> {
@@ -137,8 +188,8 @@ $(document).ready(()=> {
     if ($formData.length === 0){
       let $emptyTweet = $('<span>Don\'t be a shy birdy... Tweet text area may not be empty.</span>');
       Materialize.toast($emptyTweet, 5000);
-    } else if ( $formData.length > 140 ){
-      let $tweetOverflow = $('<span>Aren\'t you a chatty bird... Tweet exceeds 140 character limit!</span>');
+    } else if ( $formData.length > TWEET_CHARACTER_MAX ){
+      let $tweetOverflow = $(`<span>Aren't you a chatty bird... Tweet exceeds ${TWEET_CHARACTER_MAX} character limit!</span>`);
       Materialize.toast($tweetOverflow, 5000);
     } else {
       $.ajax({
@@ -214,6 +265,8 @@ $(document).ready(()=> {
     });
   });
 
+  // Now the character counter doesn't actually have a reference to '140'.
+  createCharacterCounter(TWEET_CHARACTER_MAX);
   tweetLoader();
 
 });
